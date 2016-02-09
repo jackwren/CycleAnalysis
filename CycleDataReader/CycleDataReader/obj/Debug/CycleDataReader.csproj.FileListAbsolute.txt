@@ -1,0 +1,9 @@
+F:\ASA\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.exe.config
+F:\ASA\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.exe
+F:\ASA\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.pdb
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csprojResolveAssemblyReference.cache
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Form1.resources
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Properties.Resources.resources
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csproj.GenerateResource.Cache
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.exe
+F:\ASA\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.pdb
