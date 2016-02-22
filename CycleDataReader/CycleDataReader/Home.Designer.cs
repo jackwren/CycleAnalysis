@@ -63,6 +63,8 @@
             this.txtMaxPower = new System.Windows.Forms.TextBox();
             this.txtAvgAlt = new System.Windows.Forms.TextBox();
             this.txtMaxAlt = new System.Windows.Forms.TextBox();
+            this.txtDistance = new System.Windows.Forms.TextBox();
+            this.heatRatePerMinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -243,8 +245,10 @@
             // 
             // graphsToolStripMenuItem
             // 
+            this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.heatRatePerMinToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
-            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.graphsToolStripMenuItem.Text = "Graphs";
             // 
             // aboutToolStripMenuItem
@@ -402,12 +406,30 @@
             this.txtMaxAlt.Size = new System.Drawing.Size(100, 15);
             this.txtMaxAlt.TabIndex = 32;
             // 
+            // txtDistance
+            // 
+            this.txtDistance.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtDistance.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDistance.Location = new System.Drawing.Point(937, 331);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.Size = new System.Drawing.Size(100, 15);
+            this.txtDistance.TabIndex = 33;
+            // 
+            // heatRatePerMinToolStripMenuItem
+            // 
+            this.heatRatePerMinToolStripMenuItem.Name = "heatRatePerMinToolStripMenuItem";
+            this.heatRatePerMinToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.heatRatePerMinToolStripMenuItem.Text = "Heart rate per min";
+            this.heatRatePerMinToolStripMenuItem.Click += new System.EventHandler(this.heatRatePerMinToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1105, 659);
+            this.Controls.Add(this.txtDistance);
             this.Controls.Add(this.txtMaxAlt);
             this.Controls.Add(this.txtAvgAlt);
             this.Controls.Add(this.txtMaxPower);
@@ -487,6 +509,8 @@
         private System.Windows.Forms.TextBox txtMaxPower;
         private System.Windows.Forms.TextBox txtAvgAlt;
         private System.Windows.Forms.TextBox txtMaxAlt;
+        private System.Windows.Forms.TextBox txtDistance;
+        private System.Windows.Forms.ToolStripMenuItem heatRatePerMinToolStripMenuItem;
 
 
 

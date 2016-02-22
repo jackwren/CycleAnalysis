@@ -23,7 +23,7 @@ namespace CycleDataReader
         string weight1 = "";
 
         SessionData session = new SessionData();
-        string filepath = @"C:\Temp\cycle.hrm";
+        string filepath = @"F:\ASA\Cycle.hrm";
 
         struct DataMark
         {
@@ -51,7 +51,6 @@ namespace CycleDataReader
         {
             InitializeComponent();
             ReadFile();
-            
 
         }
 
@@ -242,7 +241,13 @@ namespace CycleDataReader
                     string[] columns = data[i].Split(null);
 
                     dataEntry = new DataEntry();
-                    dataEntry.setEntry(int.Parse(columns[0]), int.Parse(columns[1]), int.Parse(columns[2]), int.Parse(columns[3]), int.Parse(columns[4]), int.Parse(columns[5]));
+                    dataEntry.setEntry(int.Parse(columns[0]), 
+                                       int.Parse(columns[1]), 
+                                       int.Parse(columns[2]), 
+                                       int.Parse(columns[3]), 
+                                       int.Parse(columns[4]), 
+                                       int.Parse(columns[5]));
+
                     sessionData.Add(dataEntry);
                 }
             }
@@ -276,8 +281,6 @@ namespace CycleDataReader
                                   dataEnt.getPowerBal(),
                                   time.AddSeconds(i * interval).TimeOfDay);
             }
-
-
         }
 
         public class DataEntry
@@ -298,8 +301,6 @@ namespace CycleDataReader
                 this.power = power;
                 this.powerBal = powerBal;
             }
-
-            
 
             public string getEntry()
             {
@@ -378,7 +379,6 @@ namespace CycleDataReader
             public string getInterval() { return interval; }
 
 
-
             // Returns datetime object 
             public DateTime getDateTime()
             {
@@ -443,6 +443,20 @@ namespace CycleDataReader
             string maxAlt = alt.ToString();
             txtMaxAlt.Text = maxAlt;
 
+            //work out total distance
+            int speed = Convert.ToInt32(avgSpeed);
+            int length = Convert.ToInt32(lengthTxt);
+
+            int totalDistance = speed * length;
+            string distance = totalDistance.ToString();
+
+            txtDistance.Text = distance;
+        }
+
+        private void heatRatePerMinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HeartRate frmchild = new HeartRate();
+            frmchild.Show();
         }
 
 
