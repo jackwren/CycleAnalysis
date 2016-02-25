@@ -13,9 +13,32 @@ namespace CycleDataReader
 {
     public partial class HeartRate : Form
     {
+        SessionData session = new SessionData();
+        List<DataEntry> sessionData = new List<DataEntry>();
+
+        /// <summary>
+        GraphPane GraphP;
+
+
+        // variables
+        LineItem OneC;
+        LineItem TwoC;
+        LineItem ThreeC;
+        LineItem FourC;
+        LineItem FiveC;
+        
+        PointPairList list1 = new PointPairList();
+        PointPairList list2 = new PointPairList();
+        PointPairList list3 = new PointPairList();
+        PointPairList list4 = new PointPairList();
+        PointPairList list5 = new PointPairList();
+        
+        /// </summary>
+
         public HeartRate()
         {
             InitializeComponent();
+
         }
 
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -25,68 +48,82 @@ namespace CycleDataReader
 
         private void HeartRate_Load(object sender, EventArgs e)
         {
-            CreateGraph(zg1);
-            SetSize();
+            showData();
+
         }
 
-        private void CreateGraph(ZedGraphControl zgc)
+        public void setData(SessionData sesh, List<DataEntry> data)
         {
-            // get a reference to the GraphPane
-            GraphPane myPane = zgc.GraphPane;
+            session = sesh;
+            sessionData = data;
+        }
 
-            // Set the Titles
-            myPane.Title.Text = "Heart Rate Over Time\n (BPM)";
-            myPane.XAxis.Title.Text = "Time (Mins)";
-            myPane.YAxis.Title.Text = "HR (BPM)";
+        public void showData()
+        {
+            GraphP = zg1.GraphPane;
 
-            // Make up some data arrays based on the Sine function
-            double x, y1;
-            PointPairList list1 = new PointPairList();
-           
-            for (int i = 0; i < 60; i++)
+            GraphP.Title.Text = "Cycle Data";
+            GraphP.XAxis.Title.Text = "Time (Secs)";
+            GraphP.YAxis.Title.Text = "Values";
+
+            GraphP.YAxis.Scale.Min = 10.0;
+            GraphP.YAxis.Scale.Max = 700.0;
+
+            int length = sessionData.Count;
+            int interval = int.Parse(session.getInterval());
+
+            GraphP.XAxis.Scale.Min = 0;
+            GraphP.XAxis.Scale.Max = length * interval;
+
+
+            // SET THE VALUES                    
+            for (int i = 0; i < length; i++)
             {
-                x = (double)i + 5;
-                y1 = 50 + Math.Sin((double)i * 0.2);
-                
-                list1.Add(x, y1);
+                DataEntry da = sessionData[i];
+                int it = i * interval;
+
+                list1.Add(it, da.getHeartRate());
+                list2.Add(it, da.getSpeed());
+                list3.Add(it, da.getCadence());
+                list4.Add(it, da.getAscent());
+                list5.Add(it, da.getPower());
                 
             }
 
-            // Generate a red curve with diamond
-            // symbols, and "HR" in the legend
-            LineItem myCurve = myPane.AddCurve("Heart Rate",
-                  list1, Color.Red, SymbolType.Circle);
 
-            // Tell ZedGraph to refigure the
-            // axes since the data have changed
-            zgc.AxisChange();
 
+            OneC = GraphP.AddCurve(null, list1, Color.Red, SymbolType.None);
+            TwoC = GraphP.AddCurve(null, list2, Color.DarkOrange, SymbolType.None);
+            ThreeC = GraphP.AddCurve(null, list3, Color.Blue, SymbolType.None);
+            FourC = GraphP.AddCurve(null, list4, Color.Green, SymbolType.None);
+            FiveC = GraphP.AddCurve(null, list5, Color.Purple, SymbolType.None);
+            
+
+            // draw 
+            zg1.AxisChange();
 
             // Change the color of the title
-            myPane.Title.FontSpec.FontColor = Color.Green;
+            GraphP.Title.FontSpec.FontColor = Color.Green;
 
             // Add gridlines to the plot, and make them gray
-            myPane.XAxis.MajorGrid.IsVisible = true;
-            myPane.YAxis.MajorGrid.IsVisible = true;
-            myPane.XAxis.MajorGrid.Color = Color.LightGray;
-            myPane.YAxis.MajorGrid.Color = Color.LightGray;
+            GraphP.XAxis.MajorGrid.IsVisible = true;
+            GraphP.YAxis.MajorGrid.IsVisible = true;
+            GraphP.XAxis.MajorGrid.Color = Color.LightGray;
+            GraphP.YAxis.MajorGrid.Color = Color.LightGray;
 
             // Move the legend location
-            myPane.Legend.Position = ZedGraph.LegendPos.Bottom;
+            GraphP.Legend.Position = ZedGraph.LegendPos.Bottom;
 
             // Make both curves thicker
-            myCurve.Line.Width = 2.0F;
-            
-            // Fill the area under the curves
-            myCurve.Line.Fill = new Fill(Color.White, Color.Red, 45F);
-           
-            // Increase the symbol sizes, and fill them with solid white
-            myCurve.Symbol.Size = 8.0F;
-           
-            myCurve.Symbol.Fill = new Fill(Color.White);
+            OneC.Line.Width = 2.0F;
+            TwoC.Line.Width = 2.0F;
+            ThreeC.Line.Width = 2.0F;
+            FourC.Line.Width = 2.0F;
+            FiveC.Line.Width = 2.0F;
+
 
             // Add a background gradient fill to the axis frame
-            myPane.Chart.Fill = new Fill(Color.White,
+            GraphP.Chart.Fill = new Fill(Color.White,
                 Color.FromArgb(255, 255, 210), -45F);
 
             // Add a caption and an arrow
@@ -94,17 +131,88 @@ namespace CycleDataReader
             myText.FontSpec.FontColor = Color.Red;
             myText.Location.AlignH = AlignH.Center;
             myText.Location.AlignV = AlignV.Top;
-            myPane.GraphObjList.Add(myText);
+            GraphP.GraphObjList.Add(myText);
             ArrowObj myArrow = new ArrowObj(Color.Red, 12F, 230F, 70F, 280F, 55F);
-            myPane.GraphObjList.Add(myArrow);
+            GraphP.GraphObjList.Add(myArrow);
 
         }
 
-        private void SetSize()
+        //Check Boxes HR
+        private void hrBox_CheckedChanged(object sender, EventArgs e)
         {
-            zg1.Location = new Point(10, 10);
-            // Leave a small margin around the outside of the control
-            zg1.Size = new Size(this.ClientRectangle.Width - 20, this.ClientRectangle.Height - 20);
+            if (GraphP.CurveList.Contains(OneC))
+            {
+                GraphP.CurveList.Remove(OneC);
+            }
+            else
+            {
+                OneC = GraphP.AddCurve(null, list1, Color.Red, SymbolType.None);
+            }
+
+            GraphP.AxisChange();
+            zg1.Refresh();
         }
+        //Check Box Speed
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GraphP.CurveList.Contains(TwoC))
+            {
+                GraphP.CurveList.Remove(TwoC);
+            }
+            else
+            {
+                TwoC = GraphP.AddCurve(null, list2, Color.DarkOrange, SymbolType.None);
+            }
+
+            GraphP.AxisChange();
+            zg1.Refresh();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GraphP.CurveList.Contains(ThreeC))
+            {
+                GraphP.CurveList.Remove(ThreeC);
+            }
+            else
+            {
+                ThreeC = GraphP.AddCurve(null, list3, Color.Blue, SymbolType.None);
+            }
+
+            GraphP.AxisChange();
+            zg1.Refresh();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GraphP.CurveList.Contains(FourC))
+            {
+                GraphP.CurveList.Remove(FourC);
+            }
+            else
+            {
+                FourC = GraphP.AddCurve(null, list4, Color.Green, SymbolType.None);
+            }
+
+            GraphP.AxisChange();
+            zg1.Refresh();
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GraphP.CurveList.Contains(FiveC))
+            {
+                GraphP.CurveList.Remove(FiveC);
+            }
+            else
+            {
+                FiveC = GraphP.AddCurve(null, list5, Color.Coral, SymbolType.None);
+            }
+
+            GraphP.AxisChange();
+            zg1.Refresh();
+        }
+
+
     }
 }

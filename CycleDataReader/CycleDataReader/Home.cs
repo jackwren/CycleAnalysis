@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections;
 
 namespace CycleDataReader
 {
@@ -22,8 +23,11 @@ namespace CycleDataReader
         string vo2max1 = "";
         string weight1 = "";
 
+        List<string> hrCol = new List<string>();
+
         SessionData session = new SessionData();
-        string filepath = @"F:\ASA\Cycle.hrm";
+        string filepath = @"C:\Temp\cycle.hrm";
+
 
         struct DataMark
         {
@@ -51,7 +55,7 @@ namespace CycleDataReader
         {
             InitializeComponent();
             ReadFile();
-
+            
         }
 
         public void ReadFile()
@@ -87,7 +91,6 @@ namespace CycleDataReader
                 Console.WriteLine("Broke");
             }
 
-            summary();
         }
 
 
@@ -281,125 +284,11 @@ namespace CycleDataReader
                                   dataEnt.getPowerBal(),
                                   time.AddSeconds(i * interval).TimeOfDay);
             }
-        }
 
-        public class DataEntry
-        {
-            int heartRate;
-            int speed;
-            int cadence;
-            int alt;
-            int power;
-            int powerBal;
-
-            public void setEntry(int heartRate, int speed, int cadence, int ascent, int power, int powerBal)
-            {
-                this.heartRate = heartRate;
-                this.speed = speed;
-                this.cadence = cadence;
-                this.alt = ascent;
-                this.power = power;
-                this.powerBal = powerBal;
-            }
-
-            public string getEntry()
-            {
-                string gap = ", ";
-                string data = getHeartRate() + gap + getSpeed() + gap + cadence + gap + alt + gap + power + gap + powerBal + " ||";
-                return data;
-            }
-
-
-            public int getHeartRate()
-            {
-                return heartRate;
-            }
-            public int getSpeed()
-            {
-                return speed;
-            }
-            public int getCadence()
-            {
-                return cadence;
-            }
-            public int getAscent()
-            {
-                return alt;
-            }
-            public int getPower()
-            {
-                return power;
-            }
-            public int getPowerBal()
-            {
-                return powerBal;
-            }
+            summary();
 
         }
 
-        public class SessionData
-        {
-            string version;
-            string sMode;
-            string date;
-            string startTime;
-            string length;
-            string interval;
-
-            public void setVersion(string version)
-            {
-                this.version = version;
-            }
-            public void setSMode(string sMode)
-            {
-                this.sMode = sMode;
-            }
-            public void setDate(string date)
-            {
-                this.date = date;
-            }
-            public void setStartTime(string startTime)
-            {
-                this.startTime = startTime;
-            }
-            public void setLenth(string length)
-            {
-                this.length = length;
-            }
-            public void setInterval(string interval)
-            {
-                this.interval = interval;
-            }
-
-            public string getVersion() { return version; }
-            public string getSMode() { return sMode; }
-            public string getDate() { return date; }
-            public string getStartTime() { return startTime; }
-            public string getLength() { return length; }
-            public string getInterval() { return interval; }
-
-
-            // Returns datetime object 
-            public DateTime getDateTime()
-            {
-                string date = getDate();
-                string time = getStartTime();
-
-                int year = int.Parse(date.Substring(0, 4));
-                int month = int.Parse(date.Substring(4, 2));
-                int day = int.Parse(date.Substring(6, 2));
-
-
-                int hour = int.Parse(time.Substring(0, 2));
-                int minute = int.Parse(time.Substring(3, 2));
-                int second = int.Parse(time.Substring(6, 2));
-
-                DateTime dt = new DateTime(year, month, day, hour, minute, second);
-                return dt;
-            }
-
-
-        }
 
         public void summary()
         {
@@ -443,23 +332,166 @@ namespace CycleDataReader
             string maxAlt = alt.ToString();
             txtMaxAlt.Text = maxAlt;
 
-            //work out total distance
-            int speed = Convert.ToInt32(avgSpeed);
-            int length = Convert.ToInt32(lengthTxt);
+            //distance
+            int speed = Int32.Parse(avgSpeed);
 
-            int totalDistance = speed * length;
-            string distance = totalDistance.ToString();
 
-            txtDistance.Text = distance;
+            foreach (DataGridViewRow item in dataView.Rows)
+            {
+                hrCol.Add(item.Cells[0].Value.ToString());
+            }
+
         }
 
         private void heatRatePerMinToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HeartRate frmchild = new HeartRate();
+            frmchild.setData(session, sessionData);
             frmchild.Show();
+        }
+
+        private void barChartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BarChart frmchild = new BarChart();
+
+            frmchild.MaxH = maxHRTxt.Text;
+            frmchild.AvgH = txtAvgHR.Text;
+            //frmchild.MinH = maxHRTxt.Text;
+
+            frmchild.MaxA = txtMaxAlt.Text;
+            frmchild.AvgA = txtAvgAlt.Text;
+            //frmchild.MinA = maxHRTxt.Text;
+
+            frmchild.MaxS = txtMaxSpeed.Text;
+            frmchild.AvgS = txtAvgSpeed.Text;
+            //frmchild.MinS = maxHRTxt.Text;
+
+            frmchild.MaxP = txtMaxPower.Text;
+            //frmchild.AvgP = ;
+            //frmchild.MinP = maxHRTxt.Text;
+
+            frmchild.Show();
+        }
+
+    }
+
+    public class DataEntry
+    {
+        int heartRate;
+        int speed;
+        int cadence;
+        int alt;
+        int power;
+        int powerBal;
+
+        public void setEntry(int heartRate, int speed, int cadence, int altitude, int power, int powerBal)
+        {
+            this.heartRate = heartRate;
+            this.speed = speed;
+            this.cadence = cadence;
+            this.alt = altitude;
+            this.power = power;
+            this.powerBal = powerBal;
+        }
+
+        public string getEntry()
+        {
+            string gap = ", ";
+            string data = getHeartRate() + gap + getSpeed() + gap + cadence + gap + alt + gap + power + gap + powerBal + " ||";
+            return data;
+        }
+
+
+        public int getHeartRate()
+        {
+            return heartRate;
+        }
+        public int getSpeed()
+        {
+            return speed;
+        }
+        public int getCadence()
+        {
+            return cadence;
+        }
+        public int getAscent()
+        {
+            return alt;
+        }
+        public int getPower()
+        {
+            return power;
+        }
+        public int getPowerBal()
+        {
+            return powerBal;
+        }
+
+    }
+
+    public class SessionData
+    {
+        string version;
+        string sMode;
+        string date;
+        string startTime;
+        string length;
+        string interval;
+
+        public void setVersion(string version)
+        {
+            this.version = version;
+        }
+        public void setSMode(string sMode)
+        {
+            this.sMode = sMode;
+        }
+        public void setDate(string date)
+        {
+            this.date = date;
+        }
+        public void setStartTime(string startTime)
+        {
+            this.startTime = startTime;
+        }
+        public void setLenth(string length)
+        {
+            this.length = length;
+        }
+        public void setInterval(string interval)
+        {
+            this.interval = interval;
+        }
+
+        public string getVersion() { return version; }
+        public string getSMode() { return sMode; }
+        public string getDate() { return date; }
+        public string getStartTime() { return startTime; }
+        public string getLength() { return length; }
+        public string getInterval() { return interval; }
+
+
+        // Returns datetime object 
+        public DateTime getDateTime()
+        {
+            string date = getDate();
+            string time = getStartTime();
+
+            int year = int.Parse(date.Substring(0, 4));
+            int month = int.Parse(date.Substring(4, 2));
+            int day = int.Parse(date.Substring(6, 2));
+
+
+            int hour = int.Parse(time.Substring(0, 2));
+            int minute = int.Parse(time.Substring(3, 2));
+            int second = int.Parse(time.Substring(6, 2));
+
+            DateTime dt = new DateTime(year, month, day, hour, minute, second);
+            return dt;
         }
 
 
     }
+
 }
 

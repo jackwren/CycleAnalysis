@@ -47,6 +47,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BarChart.Designer.cs">
+      <DependentUpon>BarChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="HeartRate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BarChart.resx">
+      <DependentUpon>BarChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HeartRate.resx">
       <DependentUpon>HeartRate.cs</DependentUpon>
     </EmbeddedResource>

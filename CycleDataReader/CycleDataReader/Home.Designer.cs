@@ -47,10 +47,11 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.heatRatePerMinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataView = new System.Windows.Forms.DataGridView();
             this.sumLbl = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -63,8 +64,6 @@
             this.txtMaxPower = new System.Windows.Forms.TextBox();
             this.txtAvgAlt = new System.Windows.Forms.TextBox();
             this.txtMaxAlt = new System.Windows.Forms.TextBox();
-            this.txtDistance = new System.Windows.Forms.TextBox();
-            this.heatRatePerMinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -246,10 +245,25 @@
             // graphsToolStripMenuItem
             // 
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.heatRatePerMinToolStripMenuItem});
+            this.heatRatePerMinToolStripMenuItem,
+            this.barChartToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
-            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.graphsToolStripMenuItem.Text = "Graphs";
+            // 
+            // heatRatePerMinToolStripMenuItem
+            // 
+            this.heatRatePerMinToolStripMenuItem.Name = "heatRatePerMinToolStripMenuItem";
+            this.heatRatePerMinToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.heatRatePerMinToolStripMenuItem.Text = "Heart rate per min";
+            this.heatRatePerMinToolStripMenuItem.Click += new System.EventHandler(this.heatRatePerMinToolStripMenuItem_Click);
+            // 
+            // barChartToolStripMenuItem
+            // 
+            this.barChartToolStripMenuItem.Name = "barChartToolStripMenuItem";
+            this.barChartToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.barChartToolStripMenuItem.Text = "Bar Chart";
+            this.barChartToolStripMenuItem.Click += new System.EventHandler(this.barChartToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -261,6 +275,7 @@
             // dataView
             // 
             this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataView.GridColor = System.Drawing.SystemColors.Highlight;
             this.dataView.Location = new System.Drawing.Point(28, 176);
             this.dataView.Name = "dataView";
             this.dataView.Size = new System.Drawing.Size(762, 471);
@@ -276,16 +291,6 @@
             this.sumLbl.TabIndex = 19;
             this.sumLbl.Text = "Summary: ";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(816, 328);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 20);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Total Distance:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -300,7 +305,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(816, 400);
+            this.label3.Location = new System.Drawing.Point(816, 369);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 20);
             this.label3.TabIndex = 23;
@@ -310,7 +315,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(816, 364);
+            this.label4.Location = new System.Drawing.Point(816, 333);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 20);
             this.label4.TabIndex = 22;
@@ -320,7 +325,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(816, 471);
+            this.label5.Location = new System.Drawing.Point(816, 440);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(130, 20);
             this.label5.TabIndex = 25;
@@ -330,7 +335,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(816, 435);
+            this.label6.Location = new System.Drawing.Point(816, 404);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 20);
             this.label6.TabIndex = 24;
@@ -340,7 +345,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(816, 506);
+            this.label7.Location = new System.Drawing.Point(816, 475);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 20);
             this.label7.TabIndex = 26;
@@ -361,7 +366,7 @@
             this.txtMaxSpeed.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtMaxSpeed.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxSpeed.Location = new System.Drawing.Point(915, 367);
+            this.txtMaxSpeed.Location = new System.Drawing.Point(915, 336);
             this.txtMaxSpeed.Name = "txtMaxSpeed";
             this.txtMaxSpeed.Size = new System.Drawing.Size(100, 15);
             this.txtMaxSpeed.TabIndex = 28;
@@ -371,7 +376,7 @@
             this.txtAvgSpeed.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtAvgSpeed.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvgSpeed.Location = new System.Drawing.Point(945, 403);
+            this.txtAvgSpeed.Location = new System.Drawing.Point(945, 372);
             this.txtAvgSpeed.Name = "txtAvgSpeed";
             this.txtAvgSpeed.Size = new System.Drawing.Size(100, 15);
             this.txtAvgSpeed.TabIndex = 29;
@@ -381,7 +386,7 @@
             this.txtMaxPower.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtMaxPower.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxPower.Location = new System.Drawing.Point(912, 438);
+            this.txtMaxPower.Location = new System.Drawing.Point(912, 407);
             this.txtMaxPower.Name = "txtMaxPower";
             this.txtMaxPower.Size = new System.Drawing.Size(100, 15);
             this.txtMaxPower.TabIndex = 30;
@@ -391,7 +396,7 @@
             this.txtAvgAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtAvgAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvgAlt.Location = new System.Drawing.Point(947, 474);
+            this.txtAvgAlt.Location = new System.Drawing.Point(947, 443);
             this.txtAvgAlt.Name = "txtAvgAlt";
             this.txtAvgAlt.Size = new System.Drawing.Size(100, 15);
             this.txtAvgAlt.TabIndex = 31;
@@ -401,27 +406,10 @@
             this.txtMaxAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtMaxAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAlt.Location = new System.Drawing.Point(922, 509);
+            this.txtMaxAlt.Location = new System.Drawing.Point(922, 478);
             this.txtMaxAlt.Name = "txtMaxAlt";
             this.txtMaxAlt.Size = new System.Drawing.Size(100, 15);
             this.txtMaxAlt.TabIndex = 32;
-            // 
-            // txtDistance
-            // 
-            this.txtDistance.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.txtDistance.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDistance.Location = new System.Drawing.Point(937, 331);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.Size = new System.Drawing.Size(100, 15);
-            this.txtDistance.TabIndex = 33;
-            // 
-            // heatRatePerMinToolStripMenuItem
-            // 
-            this.heatRatePerMinToolStripMenuItem.Name = "heatRatePerMinToolStripMenuItem";
-            this.heatRatePerMinToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.heatRatePerMinToolStripMenuItem.Text = "Heart rate per min";
-            this.heatRatePerMinToolStripMenuItem.Click += new System.EventHandler(this.heatRatePerMinToolStripMenuItem_Click);
             // 
             // Home
             // 
@@ -429,7 +417,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1105, 659);
-            this.Controls.Add(this.txtDistance);
             this.Controls.Add(this.txtMaxAlt);
             this.Controls.Add(this.txtAvgAlt);
             this.Controls.Add(this.txtMaxPower);
@@ -441,7 +428,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.sumLbl);
             this.Controls.Add(this.dataView);
@@ -496,7 +482,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataView;
         private System.Windows.Forms.Label sumLbl;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -509,8 +494,8 @@
         private System.Windows.Forms.TextBox txtMaxPower;
         private System.Windows.Forms.TextBox txtAvgAlt;
         private System.Windows.Forms.TextBox txtMaxAlt;
-        private System.Windows.Forms.TextBox txtDistance;
         private System.Windows.Forms.ToolStripMenuItem heatRatePerMinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem barChartToolStripMenuItem;
 
 
 

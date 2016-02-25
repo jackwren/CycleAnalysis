@@ -125,27 +125,36 @@ namespace CycleDataReader
             }
 
         }
-        public Random rand = new Random();
 
         public void insertData()
         {
-            // read first ten line
-            IEnumerable<string> lines = File.ReadAllLines(filePath);
-            var lineToRead = rand.Next(1, lines.Count());
-            var line = lines.Skip(lineToRead - 130).First();
+            TextReader tr = new StreamReader(filePath);
 
-            //ListViewItem item1 = new ListViewItem(date1 + "");
-            //item1.SubItems.Add(starttime1 + "");
-            //item1.SubItems.Add(length1 + "");
-            //item1.SubItems.Add(maxhr1 + "");
-            //item1.SubItems.Add(resthr1 + "");
-            //item1.SubItems.Add(vo2max1 + "");
+            //String[] tr = File.ReadAllLines(filePath);
 
-            //listView1.Items.AddRange(new ListViewItem[] { item1 });
+            for (var i = 0; i < 130; i++)
+            {
+                tr.ReadLine();
+            }
 
-            textBox1.Text = line;
+            // Read the rest
+            string remainingText = tr.ReadToEnd();
+            string[] splitText = remainingText.Split(' ');
+            
+            ListViewItem item1 = new ListViewItem(splitText[0] + "");
+            //item1.SubItems.Add(splitText[1] + "");
+            //item1.SubItems.Add(splitText[2] + "");
+            //item1.SubItems.Add(splitText[3] + "");
+            //item1.SubItems.Add(splitText[4] + "");
+            //item1.SubItems.Add(splitText[5] + "");
 
-        }
+            listView1.Items.AddRange(new ListViewItem[] { item1 });
+
+            textBox1.Text = remainingText;
+
+                
+
+         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
