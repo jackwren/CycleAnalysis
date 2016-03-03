@@ -64,6 +64,7 @@
             this.txtMaxPower = new System.Windows.Forms.TextBox();
             this.txtAvgAlt = new System.Windows.Forms.TextBox();
             this.txtMaxAlt = new System.Windows.Forms.TextBox();
+            this.loadButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -411,12 +412,23 @@
             this.txtMaxAlt.Size = new System.Drawing.Size(100, 15);
             this.txtMaxAlt.TabIndex = 32;
             // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(687, 133);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(103, 34);
+            this.loadButton.TabIndex = 33;
+            this.loadButton.Text = "Load File";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1105, 659);
+            this.Controls.Add(this.loadButton);
             this.Controls.Add(this.txtMaxAlt);
             this.Controls.Add(this.txtAvgAlt);
             this.Controls.Add(this.txtMaxPower);
@@ -496,9 +508,7 @@
         private System.Windows.Forms.TextBox txtMaxAlt;
         private System.Windows.Forms.ToolStripMenuItem heatRatePerMinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem barChartToolStripMenuItem;
-
-
-
+        private System.Windows.Forms.Button loadButton;
     }
 }
 

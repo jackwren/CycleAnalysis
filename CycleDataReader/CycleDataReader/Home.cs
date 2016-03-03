@@ -26,7 +26,7 @@ namespace CycleDataReader
         List<string> hrCol = new List<string>();
 
         SessionData session = new SessionData();
-        string filepath = @"C:\Temp\cycle.hrm";
+        string filepath = @"C:\temp\cycle.hrm";
 
 
         struct DataMark
@@ -55,7 +55,23 @@ namespace CycleDataReader
         {
             InitializeComponent();
             ReadFile();
-            
+
+
+        }
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dia = new OpenFileDialog();
+            dia.Filter = "hrm file (*.hrm)|*.hrm";
+
+            if (dia.ShowDialog() == DialogResult.OK)
+            {
+                filepath = dia.FileName;
+
+                MessageBox.Show(dia.FileName);
+                dataView.Rows.Clear();
+                dataView.Refresh();
+                showResults();
+            }
         }
 
         public void ReadFile()
@@ -100,7 +116,7 @@ namespace CycleDataReader
             try
             {
 
-                String[] lines = File.ReadAllLines(filePath);
+                String[] lines = File.ReadAllLines(filepath);
                 IEnumerable<String> date = from n in lines
                                            where n.StartsWith("Date")
                                            select n.Split('=')[1];
@@ -332,14 +348,11 @@ namespace CycleDataReader
             string maxAlt = alt.ToString();
             txtMaxAlt.Text = maxAlt;
 
-            //distance
-            int speed = Int32.Parse(avgSpeed);
 
-
-            foreach (DataGridViewRow item in dataView.Rows)
-            {
-                hrCol.Add(item.Cells[0].Value.ToString());
-            }
+            //foreach (DataGridViewRow item in dataView.Rows)
+            //{
+            //    hrCol.Add(item.Cells[0].Value.ToString());
+            //}
 
         }
 
@@ -373,6 +386,7 @@ namespace CycleDataReader
             frmchild.Show();
         }
 
+        
     }
 
     public class DataEntry
