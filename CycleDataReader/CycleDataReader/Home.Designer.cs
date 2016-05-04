@@ -65,6 +65,10 @@
             this.txtAvgAlt = new System.Windows.Forms.TextBox();
             this.txtMaxAlt = new System.Windows.Forms.TextBox();
             this.loadButton = new System.Windows.Forms.Button();
+            this.avgPower = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -214,7 +218,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.loadToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1105, 24);
@@ -281,6 +286,7 @@
             this.dataView.Name = "dataView";
             this.dataView.Size = new System.Drawing.Size(762, 471);
             this.dataView.TabIndex = 18;
+            this.dataView.SelectionChanged += new System.EventHandler(this.dataView_SelectionChanged);
             // 
             // sumLbl
             // 
@@ -326,7 +332,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(816, 440);
+            this.label5.Location = new System.Drawing.Point(816, 470);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(130, 20);
             this.label5.TabIndex = 25;
@@ -346,7 +352,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(816, 475);
+            this.label7.Location = new System.Drawing.Point(816, 505);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 20);
             this.label7.TabIndex = 26;
@@ -397,7 +403,7 @@
             this.txtAvgAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtAvgAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAvgAlt.Location = new System.Drawing.Point(947, 443);
+            this.txtAvgAlt.Location = new System.Drawing.Point(947, 473);
             this.txtAvgAlt.Name = "txtAvgAlt";
             this.txtAvgAlt.Size = new System.Drawing.Size(100, 15);
             this.txtAvgAlt.TabIndex = 31;
@@ -407,7 +413,7 @@
             this.txtMaxAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txtMaxAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAlt.Location = new System.Drawing.Point(922, 478);
+            this.txtMaxAlt.Location = new System.Drawing.Point(922, 508);
             this.txtMaxAlt.Name = "txtMaxAlt";
             this.txtMaxAlt.Size = new System.Drawing.Size(100, 15);
             this.txtMaxAlt.TabIndex = 32;
@@ -422,12 +428,49 @@
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
+            // avgPower
+            // 
+            this.avgPower.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.avgPower.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.avgPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.avgPower.Location = new System.Drawing.Point(935, 442);
+            this.avgPower.Name = "avgPower";
+            this.avgPower.Size = new System.Drawing.Size(100, 15);
+            this.avgPower.TabIndex = 35;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(816, 439);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(120, 20);
+            this.label1.TabIndex = 34;
+            this.label1.Text = "Average Power:";
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fromDateToolStripMenuItem});
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.loadToolStripMenuItem.Text = "Load";
+            // 
+            // fromDateToolStripMenuItem
+            // 
+            this.fromDateToolStripMenuItem.Name = "fromDateToolStripMenuItem";
+            this.fromDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fromDateToolStripMenuItem.Text = "From Date";
+            this.fromDateToolStripMenuItem.Click += new System.EventHandler(this.fromDateToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1105, 659);
+            this.Controls.Add(this.avgPower);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.txtMaxAlt);
             this.Controls.Add(this.txtAvgAlt);
@@ -509,6 +552,10 @@
         private System.Windows.Forms.ToolStripMenuItem heatRatePerMinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem barChartToolStripMenuItem;
         private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.TextBox avgPower;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fromDateToolStripMenuItem;
     }
 }
 

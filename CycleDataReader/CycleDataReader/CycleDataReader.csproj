@@ -53,6 +53,18 @@
     <Compile Include="BarChart.Designer.cs">
       <DependentUpon>BarChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calendar.Designer.cs">
+      <DependentUpon>Calendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Date.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Date.Designer.cs">
+      <DependentUpon>Date.cs</DependentUpon>
+    </Compile>
     <Compile Include="HeartRate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +81,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BarChart.resx">
       <DependentUpon>BarChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calendar.resx">
+      <DependentUpon>Calendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Date.resx">
+      <DependentUpon>Date.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeartRate.resx">
       <DependentUpon>HeartRate.cs</DependentUpon>

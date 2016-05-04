@@ -22,3 +22,17 @@ C:\Users\Jack\Dropbox\UNI\ASB\CycleDataReader\CycleDataReader\CycleDataReader\ob
 C:\Users\Jack\Dropbox\UNI\ASB\CycleDataReader\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Home.resources
 C:\Users\Jack\Dropbox\UNI\ASB\CycleDataReader\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Properties.Resources.resources
 C:\Users\Jack\Dropbox\UNI\ASB\CycleDataReader\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csproj.GenerateResource.Cache
+F:\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.exe.config
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.exe
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.pdb
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csprojResolveAssemblyReference.cache
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.BarChart.resources
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.HeartRate.resources
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Home.resources
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Properties.Resources.resources
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csproj.GenerateResource.Cache
+F:\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.exe
+F:\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.pdb
+F:\CycleDataReader\CycleDataReader\bin\Debug\ZedGraph.dll
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Calendar.resources
+F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Date.resources

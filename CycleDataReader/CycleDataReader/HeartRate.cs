@@ -19,7 +19,6 @@ namespace CycleDataReader
         /// <summary>
         GraphPane GraphP;
 
-
         // variables
         LineItem OneC;
         LineItem TwoC;
@@ -83,7 +82,7 @@ namespace CycleDataReader
                 int it = i * interval;
 
                 list1.Add(it, da.getHeartRate());
-                list2.Add(it, da.getSpeed());
+                list2.Add(it, da.getSpeed() / 10);
                 list3.Add(it, da.getCadence());
                 list4.Add(it, da.getAscent());
                 list5.Add(it, da.getPower());

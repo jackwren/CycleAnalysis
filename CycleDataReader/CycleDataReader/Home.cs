@@ -26,8 +26,12 @@ namespace CycleDataReader
         List<string> hrCol = new List<string>();
 
         SessionData session = new SessionData();
-        string filepath = @"C:\temp\cycle.hrm";
-
+        string filepath = @"F:\CycleDataReader\cycle.hrm";        //put the cycle hrm file in temp to work...
+        public struct SModes
+        {
+            public const string timetrial = "000000000";
+            public const string run = "111111100";
+        }
 
         struct DataMark
         {
@@ -61,13 +65,20 @@ namespace CycleDataReader
         private void loadButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dia = new OpenFileDialog();
-            dia.Filter = "hrm file (*.hrm)|*.hrm";
+            dia.Filter = "txt file (*.txt)|*.txt";
+
+            DirectoryInfo dinfo = new DirectoryInfo(@"F:\CycleDataReader\Data");
+            FileInfo[] Files = dinfo.GetFiles("*.txt");
 
             if (dia.ShowDialog() == DialogResult.OK)
             {
-                filepath = dia.FileName;
+               
+                foreach (FileInfo file in Files)
+                {
+                    filepath = file.Directory + "\\" + file.ToString();
+                    LoadingFile(filepath);
+                }
 
-                MessageBox.Show(dia.FileName);
                 dataView.Rows.Clear();
                 dataView.Refresh();
                 showResults();
@@ -253,58 +264,67 @@ namespace CycleDataReader
                     }
                 }
 
-                // HR DATA
+                // data for HR
                 if (parseType == DataMark.hrData)
                 {
-                    //Split per line          
-                    string[] columns = data[i].Split(null);
+                             
+                    string[] columns = data[i].Split(null); 
+        
+                    if (session.getSMode().Equals(SModes.run))
+                    {
+                        dataEntry = new DataEntry();
+                        dataEntry.setEntry(int.Parse(columns[0]), int.Parse(columns[1]), 
+                            int.Parse(columns[2]), int.Parse(columns[3]), 
+                            int.Parse(columns[4]), int.Parse(columns[5]));
+                        sessionData.Add(dataEntry);
+                    }
 
-                    dataEntry = new DataEntry();
-                    dataEntry.setEntry(int.Parse(columns[0]), 
-                                       int.Parse(columns[1]), 
-                                       int.Parse(columns[2]), 
-                                       int.Parse(columns[3]), 
-                                       int.Parse(columns[4]), 
-                                       int.Parse(columns[5]));
-
-                    sessionData.Add(dataEntry);
                 }
             }
         }
 
         public void showResults()
         {
+            //Header J
+            this.lengthTxt.Text = session.getLength();
+            this.dateTxt.Text = session.getDate();
+            this.startTxt.Text = session.getStartTime();
+            
+            //Data 
             dataView.ColumnCount = 7;
             dataView.Columns[0].Name = "Heart Rate (Bpm)";
-            dataView.Columns[1].Name = "Speed (Km/h)";
-            dataView.Columns[2].Name = "Cadence (Rpm)";
-            dataView.Columns[3].Name = "Altitude (M/ft)";
+            dataView.Columns[1].Name = "Speed (K/ph)";
+            dataView.Columns[2].Name = "Cadence";
+            dataView.Columns[3].Name = "Altitude";
             dataView.Columns[4].Name = "Power (Watts)";
-            dataView.Columns[5].Name = "Power Balance (Pedal Index)";
+            dataView.Columns[5].Name = "Power Balance";
             dataView.Columns[6].Name = "Time";
 
             DataEntry dataEnt;
             DateTime time = session.getDateTime();
-            int interval = int.Parse(session.getInterval());
-
-            // Loop through entries
+            int interval = int.Parse(session.getInterval()); //initate looper
             for (int i = 0; i < sessionData.Count; i++)
             {
                 dataEnt = sessionData[i];
 
-                dataView.Rows.Add(dataEnt.getHeartRate(),
-                                  dataEnt.getSpeed(),
-                                  dataEnt.getCadence(),
-                                  dataEnt.getAscent(),
-                                  dataEnt.getPower(),
-                                  dataEnt.getPowerBal(),
-                                  time.AddSeconds(i * interval).TimeOfDay);
-            }
+                if (session.getSMode().Equals(SModes.run))
+                {
+                    dataView.Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10, 
+                        dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(), 
+                        dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
+                }
 
+                if (session.getSMode().Equals(SModes.timetrial))
+                {
+                    dataView.Rows.Add(0, 0, 0, 0, dataEnt.getPower(), 0, 
+                        time.AddSeconds(i * interval).TimeOfDay);
+                }
+
+            }
+            dataView.Refresh();
             summary();
 
         }
-
 
         public void summary()
         {
@@ -314,7 +334,20 @@ namespace CycleDataReader
                                select Convert.ToInt32(row.Cells[0].FormattedValue)).Average().ToString();
 
             txtAvgHR.Text = avgHR;
-                
+
+            int maxHR = dataView.Rows.Cast<DataGridViewRow>()
+                        .Max(r => Convert.ToInt32(r.Cells[0].Value));
+
+            string maxHER = maxHR.ToString();
+            maxHRTxt.Text = maxHER;
+
+
+            int minHR = dataView.Rows.Cast<DataGridViewRow>()
+                        .Min(r => Convert.ToInt32(r.Cells[0].Value));
+
+            string minHER = minHR.ToString();
+            RestTxt.Text = minHER;
+
             //max and average Speed
             int maxSpeed = dataView.Rows.Cast<DataGridViewRow>()
                         .Max(r => Convert.ToInt32(r.Cells[1].Value));
@@ -335,6 +368,12 @@ namespace CycleDataReader
             string maxPower = mp.ToString();
             txtMaxPower.Text = maxPower;
 
+            string avgpow = (from DataGridViewRow row in dataView.Rows
+                               where row.Cells[4].FormattedValue.ToString() != string.Empty
+                               select Convert.ToInt32(row.Cells[4].FormattedValue)).Average().ToString();
+
+            avgPower.Text = avgpow;
+
             //max and average Altitude
             int alt = dataView.Rows.Cast<DataGridViewRow>()
                         .Max(r => Convert.ToInt32(r.Cells[3].Value));
@@ -349,10 +388,11 @@ namespace CycleDataReader
             txtMaxAlt.Text = maxAlt;
 
 
-            //foreach (DataGridViewRow item in dataView.Rows)
-            //{
-            //    hrCol.Add(item.Cells[0].Value.ToString());
-            //}
+            ////NORMALISISED POWER CAL
+
+            string normPow = (from DataGridViewRow row in dataView.Rows
+                              where row.Cells[4].FormattedValue.ToString() != string.Empty
+                              select Convert.ToInt32(row.Cells[4].FormattedValue)).Average().ToString();
 
         }
 
@@ -386,7 +426,56 @@ namespace CycleDataReader
             frmchild.Show();
         }
 
-        
+
+
+        private void dataView_SelectionChanged(object sender, EventArgs e)
+        {
+            List<DataGridViewRow> rowCollection = new List<DataGridViewRow>();
+                foreach (DataGridViewRow row in dataView.SelectedRows)
+                {
+                    rowCollection.Add(dataView.Rows[row.Index]);
+                   
+                }
+
+        }
+
+
+        // So it can be done from other classes
+        public void LoadingFile(string file)
+        {
+            filepath = file;
+
+            // Load from txt file
+            data = loadData();
+
+            // If has appropriate size check data 
+            if (data.Length > 0)
+            {
+                readData(data);
+            }
+            else
+            {
+                //Display error message here donny 
+                Console.WriteLine("Nahh the size aint right b, aint no lines");
+            }
+        }
+
+        public void manualDisplayData()
+        {
+            showResults();
+            
+        }
+
+        // Returns 
+        public SessionData getSession() { return session; }
+        public List<DataEntry> getSessionData() { return sessionData; }
+
+        private void fromDateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Calendar calendar = new Calendar();
+            calendar.parent = this;
+            calendar.Show();
+        }
     }
 
     public class DataEntry
