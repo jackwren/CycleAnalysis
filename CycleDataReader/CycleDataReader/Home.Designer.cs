@@ -33,23 +33,20 @@
             this.lengthLabel = new System.Windows.Forms.Label();
             this.maxHrLabel = new System.Windows.Forms.Label();
             this.restLabel = new System.Windows.Forms.Label();
-            this.vo2Label = new System.Windows.Forms.Label();
-            this.weigthLabel = new System.Windows.Forms.Label();
             this.dateTxt = new System.Windows.Forms.TextBox();
             this.startTxt = new System.Windows.Forms.TextBox();
             this.lengthTxt = new System.Windows.Forms.TextBox();
             this.maxHRTxt = new System.Windows.Forms.TextBox();
             this.RestTxt = new System.Windows.Forms.TextBox();
-            this.VO2txt = new System.Windows.Forms.TextBox();
-            this.weightTxt = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heatRatePerMinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.barChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataView = new System.Windows.Forms.DataGridView();
             this.sumLbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -67,8 +64,13 @@
             this.loadButton = new System.Windows.Forms.Button();
             this.avgPower = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.TSStxt = new System.Windows.Forms.TextBox();
+            this.IFtxt = new System.Windows.Forms.TextBox();
+            this.NPtxt = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -123,29 +125,9 @@
             this.restLabel.TabIndex = 7;
             this.restLabel.Text = "Rest Heart Rate:";
             // 
-            // vo2Label
-            // 
-            this.vo2Label.AutoSize = true;
-            this.vo2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vo2Label.Location = new System.Drawing.Point(239, 53);
-            this.vo2Label.Name = "vo2Label";
-            this.vo2Label.Size = new System.Drawing.Size(78, 20);
-            this.vo2Label.TabIndex = 8;
-            this.vo2Label.Text = "VO2 Max:";
-            // 
-            // weigthLabel
-            // 
-            this.weigthLabel.AutoSize = true;
-            this.weigthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weigthLabel.Location = new System.Drawing.Point(240, 94);
-            this.weigthLabel.Name = "weigthLabel";
-            this.weigthLabel.Size = new System.Drawing.Size(96, 20);
-            this.weigthLabel.TabIndex = 9;
-            this.weigthLabel.Text = "Weight (Kg):";
-            // 
             // dateTxt
             // 
-            this.dateTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dateTxt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.dateTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dateTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTxt.Location = new System.Drawing.Point(78, 58);
@@ -155,7 +137,7 @@
             // 
             // startTxt
             // 
-            this.startTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.startTxt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.startTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.startTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startTxt.Location = new System.Drawing.Point(116, 94);
@@ -165,7 +147,7 @@
             // 
             // lengthTxt
             // 
-            this.lengthTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.lengthTxt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.lengthTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lengthTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lengthTxt.Location = new System.Drawing.Point(93, 133);
@@ -175,7 +157,7 @@
             // 
             // maxHRTxt
             // 
-            this.maxHRTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.maxHRTxt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.maxHRTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.maxHRTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maxHRTxt.Location = new System.Drawing.Point(947, 222);
@@ -185,33 +167,13 @@
             // 
             // RestTxt
             // 
-            this.RestTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.RestTxt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.RestTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RestTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RestTxt.Location = new System.Drawing.Point(952, 258);
             this.RestTxt.Name = "RestTxt";
             this.RestTxt.Size = new System.Drawing.Size(100, 15);
             this.RestTxt.TabIndex = 14;
-            // 
-            // VO2txt
-            // 
-            this.VO2txt.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.VO2txt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.VO2txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VO2txt.Location = new System.Drawing.Point(323, 56);
-            this.VO2txt.Name = "VO2txt";
-            this.VO2txt.Size = new System.Drawing.Size(100, 15);
-            this.VO2txt.TabIndex = 15;
-            // 
-            // weightTxt
-            // 
-            this.weightTxt.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.weightTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.weightTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weightTxt.Location = new System.Drawing.Point(342, 97);
-            this.weightTxt.Name = "weightTxt";
-            this.weightTxt.Size = new System.Drawing.Size(100, 15);
-            this.weightTxt.TabIndex = 16;
             // 
             // menuStrip1
             // 
@@ -222,7 +184,7 @@
             this.loadToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1105, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1109, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -251,8 +213,7 @@
             // graphsToolStripMenuItem
             // 
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.heatRatePerMinToolStripMenuItem,
-            this.barChartToolStripMenuItem});
+            this.heatRatePerMinToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
             this.graphsToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.graphsToolStripMenuItem.Text = "Graphs";
@@ -264,19 +225,27 @@
             this.heatRatePerMinToolStripMenuItem.Text = "Heart rate per min";
             this.heatRatePerMinToolStripMenuItem.Click += new System.EventHandler(this.heatRatePerMinToolStripMenuItem_Click);
             // 
-            // barChartToolStripMenuItem
-            // 
-            this.barChartToolStripMenuItem.Name = "barChartToolStripMenuItem";
-            this.barChartToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.barChartToolStripMenuItem.Text = "Bar Chart";
-            this.barChartToolStripMenuItem.Click += new System.EventHandler(this.barChartToolStripMenuItem_Click);
-            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fromDateToolStripMenuItem});
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.loadToolStripMenuItem.Text = "Load";
+            // 
+            // fromDateToolStripMenuItem
+            // 
+            this.fromDateToolStripMenuItem.Name = "fromDateToolStripMenuItem";
+            this.fromDateToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.fromDateToolStripMenuItem.Text = "From Date";
+            this.fromDateToolStripMenuItem.Click += new System.EventHandler(this.fromDateToolStripMenuItem_Click);
             // 
             // dataView
             // 
@@ -286,6 +255,7 @@
             this.dataView.Name = "dataView";
             this.dataView.Size = new System.Drawing.Size(762, 471);
             this.dataView.TabIndex = 18;
+            this.dataView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataView_CellMouseUp);
             this.dataView.SelectionChanged += new System.EventHandler(this.dataView_SelectionChanged);
             // 
             // sumLbl
@@ -360,7 +330,7 @@
             // 
             // txtAvgHR
             // 
-            this.txtAvgHR.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtAvgHR.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtAvgHR.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgHR.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAvgHR.Location = new System.Drawing.Point(977, 295);
@@ -370,7 +340,7 @@
             // 
             // txtMaxSpeed
             // 
-            this.txtMaxSpeed.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtMaxSpeed.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtMaxSpeed.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaxSpeed.Location = new System.Drawing.Point(915, 336);
@@ -380,7 +350,7 @@
             // 
             // txtAvgSpeed
             // 
-            this.txtAvgSpeed.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtAvgSpeed.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtAvgSpeed.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAvgSpeed.Location = new System.Drawing.Point(945, 372);
@@ -390,7 +360,7 @@
             // 
             // txtMaxPower
             // 
-            this.txtMaxPower.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtMaxPower.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtMaxPower.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaxPower.Location = new System.Drawing.Point(912, 407);
@@ -400,7 +370,7 @@
             // 
             // txtAvgAlt
             // 
-            this.txtAvgAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtAvgAlt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtAvgAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAvgAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAvgAlt.Location = new System.Drawing.Point(947, 473);
@@ -410,7 +380,7 @@
             // 
             // txtMaxAlt
             // 
-            this.txtMaxAlt.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txtMaxAlt.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtMaxAlt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaxAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaxAlt.Location = new System.Drawing.Point(922, 508);
@@ -430,7 +400,7 @@
             // 
             // avgPower
             // 
-            this.avgPower.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.avgPower.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.avgPower.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.avgPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.avgPower.Location = new System.Drawing.Point(935, 442);
@@ -448,27 +418,89 @@
             this.label1.TabIndex = 34;
             this.label1.Text = "Average Power:";
             // 
-            // loadToolStripMenuItem
+            // button1
             // 
-            this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fromDateToolStripMenuItem});
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
-            this.loadToolStripMenuItem.Text = "Load";
+            this.button1.Location = new System.Drawing.Point(594, 133);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(87, 33);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "Refresh";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // fromDateToolStripMenuItem
+            // label8
             // 
-            this.fromDateToolStripMenuItem.Name = "fromDateToolStripMenuItem";
-            this.fromDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fromDateToolStripMenuItem.Text = "From Date";
-            this.fromDateToolStripMenuItem.Click += new System.EventHandler(this.fromDateToolStripMenuItem_Click);
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(816, 569);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(140, 20);
+            this.label8.TabIndex = 37;
+            this.label8.Text = "Normalised Power:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(924, 598);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(28, 20);
+            this.label9.TabIndex = 38;
+            this.label9.Text = "IF:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(908, 627);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(44, 20);
+            this.label10.TabIndex = 39;
+            this.label10.Text = "TSS:";
+            // 
+            // TSStxt
+            // 
+            this.TSStxt.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.TSStxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TSStxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TSStxt.Location = new System.Drawing.Point(958, 630);
+            this.TSStxt.Name = "TSStxt";
+            this.TSStxt.Size = new System.Drawing.Size(100, 15);
+            this.TSStxt.TabIndex = 42;
+            // 
+            // IFtxt
+            // 
+            this.IFtxt.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.IFtxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.IFtxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IFtxt.Location = new System.Drawing.Point(962, 601);
+            this.IFtxt.Name = "IFtxt";
+            this.IFtxt.Size = new System.Drawing.Size(100, 15);
+            this.IFtxt.TabIndex = 41;
+            // 
+            // NPtxt
+            // 
+            this.NPtxt.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.NPtxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NPtxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NPtxt.Location = new System.Drawing.Point(958, 572);
+            this.NPtxt.Name = "NPtxt";
+            this.NPtxt.Size = new System.Drawing.Size(100, 15);
+            this.NPtxt.TabIndex = 40;
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1105, 659);
+            this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ClientSize = new System.Drawing.Size(1109, 675);
+            this.Controls.Add(this.TSStxt);
+            this.Controls.Add(this.IFtxt);
+            this.Controls.Add(this.NPtxt);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.avgPower);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.loadButton);
@@ -486,15 +518,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.sumLbl);
             this.Controls.Add(this.dataView);
-            this.Controls.Add(this.weightTxt);
-            this.Controls.Add(this.VO2txt);
             this.Controls.Add(this.RestTxt);
             this.Controls.Add(this.maxHRTxt);
             this.Controls.Add(this.lengthTxt);
             this.Controls.Add(this.startTxt);
             this.Controls.Add(this.dateTxt);
-            this.Controls.Add(this.weigthLabel);
-            this.Controls.Add(this.vo2Label);
             this.Controls.Add(this.restLabel);
             this.Controls.Add(this.maxHrLabel);
             this.Controls.Add(this.lengthLabel);
@@ -520,15 +548,11 @@
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxHrLabel;
         private System.Windows.Forms.Label restLabel;
-        private System.Windows.Forms.Label vo2Label;
-        private System.Windows.Forms.Label weigthLabel;
         private System.Windows.Forms.TextBox dateTxt;
         private System.Windows.Forms.TextBox startTxt;
         private System.Windows.Forms.TextBox lengthTxt;
         private System.Windows.Forms.TextBox maxHRTxt;
         private System.Windows.Forms.TextBox RestTxt;
-        private System.Windows.Forms.TextBox VO2txt;
-        private System.Windows.Forms.TextBox weightTxt;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -550,12 +574,18 @@
         private System.Windows.Forms.TextBox txtAvgAlt;
         private System.Windows.Forms.TextBox txtMaxAlt;
         private System.Windows.Forms.ToolStripMenuItem heatRatePerMinToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem barChartToolStripMenuItem;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.TextBox avgPower;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fromDateToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox TSStxt;
+        private System.Windows.Forms.TextBox IFtxt;
+        private System.Windows.Forms.TextBox NPtxt;
     }
 }
 

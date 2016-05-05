@@ -26,7 +26,6 @@ F:\CycleDataReader\CycleDataReader\bin\Debug\CycleDataReader.exe.config
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.exe
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.pdb
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.csprojResolveAssemblyReference.cache
-F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.BarChart.resources
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.HeartRate.resources
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Home.resources
 F:\CycleDataReader\CycleDataReader\obj\Debug\CycleDataReader.Properties.Resources.resources

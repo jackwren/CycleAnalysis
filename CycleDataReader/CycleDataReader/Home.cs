@@ -24,6 +24,19 @@ namespace CycleDataReader
         string weight1 = "";
 
         List<string> hrCol = new List<string>();
+        List<double> rollingPower = new List<double>();
+        List<double> totalAverages = new List<double>();
+
+        string NP = "";
+        string IF = "";
+        string TSS = "";
+        int norm_Pow;
+        int avg_pow;
+        int int_fac;
+        int TSS_num;
+        int length;
+
+
 
         SessionData session = new SessionData();
         string filepath = @"F:\CycleDataReader\cycle.hrm";        //put the cycle hrm file in temp to work...
@@ -190,8 +203,7 @@ namespace CycleDataReader
                 lengthTxt.Text = length1;
                 maxHRTxt.Text = maxhr1;
                 RestTxt.Text = resthr1;
-                VO2txt.Text = vo2max1;
-                weightTxt.Text = weight1;
+              
 
 
             }
@@ -303,6 +315,49 @@ namespace CycleDataReader
             DataEntry dataEnt;
             DateTime time = session.getDateTime();
             int interval = int.Parse(session.getInterval()); //initate looper
+            length = sessionData.Count;
+
+            // WORK OUT NP YEYEYE
+            for (int i = 0; i < sessionData.Count; i++)
+            {
+                dataEnt = sessionData[i];
+
+                rollingPower.Add(dataEnt.getPower());
+
+                if (i % 30 / interval == 0 && i > 0)
+                {
+                    double total = 0;
+
+                    for (int j = 0; j < rollingPower.Count; j++)
+                    {
+                        rollingPower[j] = Math.Pow(rollingPower[j], 4); // times by 4th power
+                        total += rollingPower[j];
+                        rollingPower.Clear();
+                    }
+
+                    totalAverages.Add(total);
+                }
+            }
+
+
+            double fullPower = 0;
+
+            for (int i = 0; i < totalAverages.Count; i++)
+            {
+                fullPower += totalAverages[i];
+            }
+
+            fullPower /= totalAverages.Count;
+
+            double nth_root = Math.Round(Math.Pow(fullPower, 1 / 4.0),2); // find 4th root of the averages of powers
+
+            norm_Pow = Convert.ToInt32(nth_root);
+            
+            NP = nth_root.ToString(); // convert it to string so can dsiplay
+
+
+            //ADD DATA TO GRID YEYE
+
             for (int i = 0; i < sessionData.Count; i++)
             {
                 dataEnt = sessionData[i];
@@ -326,14 +381,16 @@ namespace CycleDataReader
 
         }
 
+
+
         public void summary()
         {
             //average HR
-            string avgHR = (from DataGridViewRow row in dataView.Rows
+            double avgHR = (from DataGridViewRow row in dataView.Rows
                                where row.Cells[0].FormattedValue.ToString() != string.Empty
-                               select Convert.ToInt32(row.Cells[0].FormattedValue)).Average().ToString();
+                               select Convert.ToInt32(row.Cells[0].FormattedValue)).Average();
 
-            txtAvgHR.Text = avgHR;
+            txtAvgHR.Text = Math.Round(avgHR,2).ToString();
 
             int maxHR = dataView.Rows.Cast<DataGridViewRow>()
                         .Max(r => Convert.ToInt32(r.Cells[0].Value));
@@ -355,11 +412,11 @@ namespace CycleDataReader
             string maxS = maxSpeed.ToString();
             txtMaxSpeed.Text = maxS;
 
-            string avgSpeed = (from DataGridViewRow row in dataView.Rows
+            double avgSpeed = (from DataGridViewRow row in dataView.Rows
                                  where row.Cells[1].FormattedValue.ToString() != string.Empty 
-                                   select Convert.ToInt32(row.Cells[1].FormattedValue)).Average().ToString();
+                                   select Convert.ToInt32(row.Cells[1].FormattedValue)).Average();
 
-            txtAvgSpeed.Text = avgSpeed;
+            txtAvgSpeed.Text = Math.Round(avgSpeed,2).ToString();
 
             //max power
             int mp = dataView.Rows.Cast<DataGridViewRow>()
@@ -368,21 +425,22 @@ namespace CycleDataReader
             string maxPower = mp.ToString();
             txtMaxPower.Text = maxPower;
 
-            string avgpow = (from DataGridViewRow row in dataView.Rows
+            double avgpow = (from DataGridViewRow row in dataView.Rows
                                where row.Cells[4].FormattedValue.ToString() != string.Empty
-                               select Convert.ToInt32(row.Cells[4].FormattedValue)).Average().ToString();
+                               select Convert.ToInt32(row.Cells[4].FormattedValue)).Average();
 
-            avgPower.Text = avgpow;
+            avgPower.Text = Math.Round(avgpow, 2).ToString();
 
             //max and average Altitude
             int alt = dataView.Rows.Cast<DataGridViewRow>()
                         .Max(r => Convert.ToInt32(r.Cells[3].Value));
 
-            string avgAlt = (from DataGridViewRow row in dataView.Rows
+            double avgAlt = (from DataGridViewRow row in dataView.Rows
                              where row.Cells[3].FormattedValue.ToString() != string.Empty
-                             select Convert.ToInt32(row.Cells[3].FormattedValue)).Average().ToString();
+                             select Convert.ToInt32(row.Cells[3].FormattedValue)).Average();
 
-            txtAvgAlt.Text = avgAlt;
+            
+            txtAvgAlt.Text = Math.Round(avgAlt,2).ToString();
 
             string maxAlt = alt.ToString();
             txtMaxAlt.Text = maxAlt;
@@ -390,9 +448,21 @@ namespace CycleDataReader
 
             ////NORMALISISED POWER CAL
 
-            string normPow = (from DataGridViewRow row in dataView.Rows
-                              where row.Cells[4].FormattedValue.ToString() != string.Empty
-                              select Convert.ToInt32(row.Cells[4].FormattedValue)).Average().ToString();
+            NPtxt.Text = NP;
+
+            //divide by avg power for IF
+
+            avg_pow = Convert.ToInt32(avgpow);
+
+            int_fac = norm_Pow / avg_pow;
+
+            IFtxt.Text = int_fac.ToString();
+
+            //TSS
+
+            int tss_cal = (length * norm_Pow * int_fac) / (avg_pow * 3600) * 100;
+            TSS = tss_cal.ToString();
+            TSStxt.Text = TSS;
 
         }
 
@@ -403,39 +473,9 @@ namespace CycleDataReader
             frmchild.Show();
         }
 
-        private void barChartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BarChart frmchild = new BarChart();
-
-            frmchild.MaxH = maxHRTxt.Text;
-            frmchild.AvgH = txtAvgHR.Text;
-            //frmchild.MinH = maxHRTxt.Text;
-
-            frmchild.MaxA = txtMaxAlt.Text;
-            frmchild.AvgA = txtAvgAlt.Text;
-            //frmchild.MinA = maxHRTxt.Text;
-
-            frmchild.MaxS = txtMaxSpeed.Text;
-            frmchild.AvgS = txtAvgSpeed.Text;
-            //frmchild.MinS = maxHRTxt.Text;
-
-            frmchild.MaxP = txtMaxPower.Text;
-            //frmchild.AvgP = ;
-            //frmchild.MinP = maxHRTxt.Text;
-
-            frmchild.Show();
-        }
-
-
-
         private void dataView_SelectionChanged(object sender, EventArgs e)
         {
-            List<DataGridViewRow> rowCollection = new List<DataGridViewRow>();
-                foreach (DataGridViewRow row in dataView.SelectedRows)
-                {
-                    rowCollection.Add(dataView.Rows[row.Index]);
-                   
-                }
+            
 
         }
 
@@ -456,7 +496,7 @@ namespace CycleDataReader
             else
             {
                 //Display error message here donny 
-                Console.WriteLine("Nahh the size aint right b, aint no lines");
+                Console.WriteLine("");
             }
         }
 
@@ -476,7 +516,59 @@ namespace CycleDataReader
             calendar.parent = this;
             calendar.Show();
         }
+
+
+        private void selectedCellsButton_Click(object sender, System.EventArgs e)
+        {
+            
+                
+            
+        }
+
+        private void dataView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Int32 selectedCellCount = dataView.GetCellCount(DataGridViewElementStates.Selected);
+            DataEntry dataEnt;
+            DateTime time = session.getDateTime();
+            int interval = int.Parse(session.getInterval()); //initate looper
+
+            if (selectedCellCount > 0)
+                {
+                    if (dataView.AreAllCellsSelected(true))
+                    {
+                        MessageBox.Show("All cells are selected", "Selected Cells");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < selectedCellCount; i++)
+                        {
+                            dataEnt = sessionData[i];
+
+                            foreach (DataGridViewRow item in dataView.Rows)
+                            {
+                
+                            dataView.Rows.Clear();
+                            dataView.Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10,
+                            dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(),
+                            dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
+                            
+                            }
+
+                        }
+                    }    
+
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataView.Rows.Clear();
+            dataView.Show();
+            showResults();
+        }
     }
+
 
     public class DataEntry
     {

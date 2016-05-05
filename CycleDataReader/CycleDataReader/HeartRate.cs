@@ -125,14 +125,7 @@ namespace CycleDataReader
             GraphP.Chart.Fill = new Fill(Color.White,
                 Color.FromArgb(255, 255, 210), -45F);
 
-            // Add a caption and an arrow
-            TextObj myText = new TextObj("Drop in \n HR & Speed", 1205F, 510F);
-            myText.FontSpec.FontColor = Color.Red;
-            myText.Location.AlignH = AlignH.Center;
-            myText.Location.AlignV = AlignV.Top;
-            GraphP.GraphObjList.Add(myText);
-            ArrowObj myArrow = new ArrowObj(Color.Red, 12F, 1270F, 510F, 1205F, 385F);
-            GraphP.GraphObjList.Add(myArrow);
+          
 
         }
 
