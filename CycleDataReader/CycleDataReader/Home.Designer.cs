@@ -71,6 +71,7 @@
             this.TSStxt = new System.Windows.Forms.TextBox();
             this.IFtxt = new System.Windows.Forms.TextBox();
             this.NPtxt = new System.Windows.Forms.TextBox();
+            this.selectBtn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
@@ -253,6 +254,7 @@
             this.dataView.GridColor = System.Drawing.SystemColors.Highlight;
             this.dataView.Location = new System.Drawing.Point(28, 176);
             this.dataView.Name = "dataView";
+            this.dataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataView.Size = new System.Drawing.Size(762, 471);
             this.dataView.TabIndex = 18;
             this.dataView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataView_CellMouseUp);
@@ -488,12 +490,23 @@
             this.NPtxt.Size = new System.Drawing.Size(100, 15);
             this.NPtxt.TabIndex = 40;
             // 
+            // selectBtn
+            // 
+            this.selectBtn.Location = new System.Drawing.Point(501, 133);
+            this.selectBtn.Name = "selectBtn";
+            this.selectBtn.Size = new System.Drawing.Size(87, 33);
+            this.selectBtn.TabIndex = 43;
+            this.selectBtn.Text = "Select";
+            this.selectBtn.UseVisualStyleBackColor = true;
+            this.selectBtn.Click += new System.EventHandler(this.selectBtn_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(1109, 675);
+            this.Controls.Add(this.selectBtn);
             this.Controls.Add(this.TSStxt);
             this.Controls.Add(this.IFtxt);
             this.Controls.Add(this.NPtxt);
@@ -586,6 +599,7 @@
         private System.Windows.Forms.TextBox TSStxt;
         private System.Windows.Forms.TextBox IFtxt;
         private System.Windows.Forms.TextBox NPtxt;
+        private System.Windows.Forms.Button selectBtn;
     }
 }
 

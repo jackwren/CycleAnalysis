@@ -32,7 +32,7 @@ namespace CycleDataReader
             SessionData sesh;
             string filepath;
             calRef = new List<CalendarRef>();
-            DirectoryInfo dinfo = new DirectoryInfo(@"F:\CycleDataReader\Data");
+            DirectoryInfo dinfo = new DirectoryInfo(@"C:\Users\Jack\Documents\GitHub\CycleAnalysis\CycleDataReader\Data");
             FileInfo[] Files = dinfo.GetFiles("*.txt");
 
             foreach (FileInfo file in Files)

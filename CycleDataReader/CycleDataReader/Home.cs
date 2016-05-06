@@ -28,18 +28,18 @@ namespace CycleDataReader
         List<double> totalAverages = new List<double>();
 
         string NP = "";
-        string IF = "";
-        string TSS = "";
         int norm_Pow;
-        int avg_pow;
         int int_fac;
-        int TSS_num;
         int length;
+        int tss_cal;
 
+        double nth_root;
 
+        DataSet DataSet = new DataSet();
+       
 
         SessionData session = new SessionData();
-        string filepath = @"F:\CycleDataReader\cycle.hrm";        //put the cycle hrm file in temp to work...
+        string filepath = @"C:\Users\Jack\Documents\GitHub\CycleAnalysis\CycleDataReader\cycle.hrm";        //put the cycle hrm file in temp to work...
         public struct SModes
         {
             public const string timetrial = "000000000";
@@ -72,7 +72,15 @@ namespace CycleDataReader
         {
             InitializeComponent();
             ReadFile();
+            DataSet.Tables.Add("Table");
 
+            DataSet.Tables[0].Columns.Add("Heart Rate");
+            DataSet.Tables[0].Columns.Add("Speed");
+            DataSet.Tables[0].Columns.Add("Cadence");
+            DataSet.Tables[0].Columns.Add("Altitude");
+            DataSet.Tables[0].Columns.Add("Power");
+            DataSet.Tables[0].Columns.Add("Power balance");
+            DataSet.Tables[0].Columns.Add("Time");
 
         }
         private void loadButton_Click(object sender, EventArgs e)
@@ -80,7 +88,7 @@ namespace CycleDataReader
             OpenFileDialog dia = new OpenFileDialog();
             dia.Filter = "txt file (*.txt)|*.txt";
 
-            DirectoryInfo dinfo = new DirectoryInfo(@"F:\CycleDataReader\Data");
+            DirectoryInfo dinfo = new DirectoryInfo(@"C:\Users\Jack\Documents\GitHub\CycleAnalysis\CycleDataReader\Data");
             FileInfo[] Files = dinfo.GetFiles("*.txt");
 
             if (dia.ShowDialog() == DialogResult.OK)
@@ -302,6 +310,7 @@ namespace CycleDataReader
             this.dateTxt.Text = session.getDate();
             this.startTxt.Text = session.getStartTime();
             
+
             //Data 
             dataView.ColumnCount = 7;
             dataView.Columns[0].Name = "Heart Rate (Bpm)";
@@ -317,7 +326,7 @@ namespace CycleDataReader
             int interval = int.Parse(session.getInterval()); //initate looper
             length = sessionData.Count;
 
-            // WORK OUT NP YEYEYE
+            // WORK OUT Normalised Poweer YEYEYE
             for (int i = 0; i < sessionData.Count; i++)
             {
                 dataEnt = sessionData[i];
@@ -349,7 +358,7 @@ namespace CycleDataReader
 
             fullPower /= totalAverages.Count;
 
-            double nth_root = Math.Round(Math.Pow(fullPower, 1 / 4.0),2); // find 4th root of the averages of powers
+            nth_root = Math.Round(Math.Pow(fullPower, 1 / 4.0),2); // find 4th root of the averages of powers
 
             norm_Pow = Convert.ToInt32(nth_root);
             
@@ -367,12 +376,11 @@ namespace CycleDataReader
                     dataView.Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10, 
                         dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(), 
                         dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
-                }
 
-                if (session.getSMode().Equals(SModes.timetrial))
-                {
-                    dataView.Rows.Add(0, 0, 0, 0, dataEnt.getPower(), 0, 
-                        time.AddSeconds(i * interval).TimeOfDay);
+                    DataSet.Tables[0].Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10,
+                        dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(),
+                        dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
+
                 }
 
             }
@@ -446,23 +454,19 @@ namespace CycleDataReader
             txtMaxAlt.Text = maxAlt;
 
 
-            ////NORMALISISED POWER CAL
+            ////NORMALISISED POWER 
 
             NPtxt.Text = NP;
 
-            //divide by avg power for IF
+            //divide by avg power for INTENSITY FACTOR
 
-            avg_pow = Convert.ToInt32(avgpow);
-
-            int_fac = norm_Pow / avg_pow;
-
+            int_fac = Convert.ToInt32(nth_root) / Convert.ToInt32(avgpow);
             IFtxt.Text = int_fac.ToString();
 
             //TSS
 
-            int tss_cal = (length * norm_Pow * int_fac) / (avg_pow * 3600) * 100;
-            TSS = tss_cal.ToString();
-            TSStxt.Text = TSS;
+            tss_cal = (length * norm_Pow * int_fac) / (Convert.ToInt32(avgpow) * 3600) * 100;
+            TSStxt.Text = tss_cal.ToString();
 
         }
 
@@ -517,14 +521,6 @@ namespace CycleDataReader
             calendar.Show();
         }
 
-
-        private void selectedCellsButton_Click(object sender, System.EventArgs e)
-        {
-            
-                
-            
-        }
-
         private void dataView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
             Int32 selectedCellCount = dataView.GetCellCount(DataGridViewElementStates.Selected);
@@ -534,30 +530,28 @@ namespace CycleDataReader
 
             if (selectedCellCount > 0)
                 {
-                    if (dataView.AreAllCellsSelected(true))
+                    if (dataView.AreAllCellsSelected(true) )
                     {
                         MessageBox.Show("All cells are selected", "Selected Cells");
                     }
                     else
                     {
-                        for (int i = 0; i < selectedCellCount; i++)
+                    for (int i = 0; i < selectedCellCount; i++)
+                    {
+
+                        foreach (DataGridViewRow dr in dataView.Rows)
                         {
-                            dataEnt = sessionData[i];
-
-                            foreach (DataGridViewRow item in dataView.Rows)
-                            {
-                
-                            dataView.Rows.Clear();
-                            dataView.Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10,
-                            dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(),
-                            dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
+                             dataEnt = sessionData[i];
+                                dataView.Rows.Clear();
+                                dataView.Rows.Add(dataEnt.getHeartRate(), dataEnt.getSpeed() / 10,
+                                dataEnt.getCadence(), dataEnt.getAscent(), dataEnt.getPower(),
+                                dataEnt.getPowerBal(), time.AddSeconds(i * interval).TimeOfDay);
                             
-                            }
-
                         }
-                    }    
 
-            }
+                    }
+                   }    
+                 }
 
         }
 
@@ -566,6 +560,29 @@ namespace CycleDataReader
             dataView.Rows.Clear();
             dataView.Show();
             showResults();
+        }
+
+        private void selectBtn_Click(object sender, EventArgs e)
+        {
+
+            DataTable clone = this.DataSet.Tables[0].Clone();
+
+            foreach (DataGridViewRow row in dataView.SelectedRows)
+            {
+                object[] values = new object[row.Cells.Count];
+
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    values[i] = row.Cells[i].Value;
+
+                }
+
+                clone.Rows.Add(values);
+            }
+
+            dataView.Rows.Clear();
+            dataView.Refresh();
+            dataView.DataSource = DataSet.Tables[0];
         }
     }
 
